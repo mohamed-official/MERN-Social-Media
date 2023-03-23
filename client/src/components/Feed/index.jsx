@@ -42,7 +42,7 @@ const Posts = [
 
 const Feed = () => {
   return (
-    <Box w="90%" mx="auto" mb={16}>
+    <Box w="90%" mx="auto" mb={16} pl={{ base: "0px", lg: 24, xl: "0px" }}>
       <NewPost />
       <VStack spacing={16} mt={16}>
         {Posts.map((post) => (

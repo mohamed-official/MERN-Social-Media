@@ -36,28 +36,19 @@ const communities = [
 
 const Rightbar = () => {
   return (
-    <Box w={60} mt={16} pos="absolute" zIndex={9999} right={0}>
-      <RightbarContent display={{ base: "none", lg: "block" }} />
+    <Box w={60} pos="absolute" top={24} mr={4} right={0}>
+      <RightbarContent display={{ base: "none", xl: "block" }} rounded="lg" />
     </Box>
   );
 };
 
 const RightbarContent = ({ ...rest }) => {
   return (
-    <Box
-      bg="white"
-      borderTop="1px"
-      borderLeft="1px"
-      borderColor="gray.200"
-      w={60}
-      pos="fixed"
-      h="full"
-      {...rest}
-    >
+    <Box bg="white" w={60} h="auto" {...rest} pos="fixed">
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl">Communities</Text>
       </Flex>
-      <VStack spacing={4}>
+      <VStack spacing={4} py={8}>
         {communities.map((link) => (
           <NavItem
             key={link.name}

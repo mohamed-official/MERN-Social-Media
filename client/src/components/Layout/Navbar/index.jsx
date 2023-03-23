@@ -1,21 +1,32 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   HStack,
   IconButton,
   Link,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
 import {
+  IoChevronDown,
   IoClose,
   IoHome,
+  IoLogOutOutline,
   IoMenu,
   IoNotifications,
   IoPeople,
+  IoPersonCircleOutline,
+  IoSettings,
 } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 import Container from "../Container";
 
@@ -40,6 +51,8 @@ const NavLink = ({ link, icon, text, type }) =>
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
   return (
     <Box
@@ -88,15 +101,33 @@ const Navbar = () => {
               />
             ))}
           </HStack>
-          <HStack
-            as={RouterLink}
-            to={"/u/mohamed"}
-            spacing={4}
-            alignItems="center"
-          >
-            <Avatar name="Mohamed Essam" size="md" />
-            <Text>Mohamed Essam</Text>
-          </HStack>
+          <Flex alignItems="center">
+            <Menu>
+              <MenuButton
+                as={Button}
+                bg={"transparent"}
+                _hover={{ bg: "transparent" }}
+                _active={{ bg: "transparent" }}
+                cursor="pointer"
+                rightIcon={<IoChevronDown />}
+              >
+                <HStack spacing={4} alignItems="center">
+                  <Avatar name="Mohamed Essam" size="md" />
+                  <Text>Mohamed Essam</Text>
+                </HStack>
+              </MenuButton>
+              <MenuList>
+                <MenuItem icon={<IoPersonCircleOutline size={25} />}>
+                  Profile
+                </MenuItem>
+                <MenuItem icon={<IoSettings size={25} />}>Settings</MenuItem>
+                <MenuDivider />
+                <MenuItem icon={<IoLogOutOutline size={25} />} color="red.500">
+                  Logout
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Flex>
         </Flex>
 
         {isOpen ? (

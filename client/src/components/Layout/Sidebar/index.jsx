@@ -19,25 +19,16 @@ const LinkItems = [
 
 const Sidebar = () => {
   return (
-    <Box w={60} mt={16} pos="fixed" zIndex={9999}>
-      <SidebarContent display={{ base: "none", lg: "block" }} />
+    <Box w={60} pos="fixed" top={24} ml={4}>
+      <SidebarContent display={{ base: "none", lg: "block" }} rounded="lg" />
     </Box>
   );
 };
 
 const SidebarContent = ({ ...rest }) => {
   return (
-    <Box
-      bg="white"
-      borderRight="1px"
-      borderTop="1px"
-      borderColor="gray.200"
-      w={60}
-      pos="fixed"
-      h="full"
-      {...rest}
-    >
-      <VStack spacing={4} mt={8}>
+    <Box bg="white" w={60} h="full" {...rest}>
+      <VStack spacing={4} py={8}>
         {LinkItems.map((link) => (
           <NavItem
             key={link.name}

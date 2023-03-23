@@ -3,7 +3,13 @@ import { Link } from "react-router-dom";
 
 const Post = ({ post }) => {
   return (
-    <Box bg="white" border="1px solid" borderColor="gray.200" p={4}>
+    <Box
+      minW={{ base: "auto", lg: "28rem" }}
+      bg="white"
+      border="1px solid"
+      borderColor="gray.200"
+      p={4}
+    >
       <HStack
         as={Link}
         to={`/u/${post.user}`}
