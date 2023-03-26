@@ -28,6 +28,7 @@ import {
 } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
+import { setLogout } from "../../../state";
 import Container from "../Container";
 
 const Links = [
@@ -101,33 +102,66 @@ const Navbar = () => {
               />
             ))}
           </HStack>
-          <Flex alignItems="center">
-            <Menu>
-              <MenuButton
-                as={Button}
-                bg={"transparent"}
-                _hover={{ bg: "transparent" }}
-                _active={{ bg: "transparent" }}
-                cursor="pointer"
-                rightIcon={<IoChevronDown />}
+          {user ? (
+            <Flex alignItems="center">
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  bg={"transparent"}
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  cursor="pointer"
+                  rightIcon={<IoChevronDown />}
+                >
+                  <HStack spacing={4} alignItems="center">
+                    <Avatar
+                      src={user?.avatarPath}
+                      name={`${user?.firstName} ${user?.lastName}`}
+                      size="md"
+                    />
+                    <Text>
+                      {user?.firstName} {user?.lastName}
+                    </Text>
+                  </HStack>
+                </MenuButton>
+                <MenuList>
+                  <MenuItem icon={<IoPersonCircleOutline size={25} />}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem icon={<IoSettings size={25} />}>Settings</MenuItem>
+                  <MenuDivider />
+                  <MenuItem
+                    onClick={() => dispatch(setLogout())}
+                    icon={<IoLogOutOutline size={25} />}
+                    color="red.500"
+                  >
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Flex>
+          ) : (
+            <HStack>
+              <Button
+                bg="purple.600"
+                colorScheme="purple"
+                variant="solid"
+                as={RouterLink}
+                to="/login"
               >
-                <HStack spacing={4} alignItems="center">
-                  <Avatar name="Mohamed Essam" size="md" />
-                  <Text>Mohamed Essam</Text>
-                </HStack>
-              </MenuButton>
-              <MenuList>
-                <MenuItem icon={<IoPersonCircleOutline size={25} />}>
-                  Profile
-                </MenuItem>
-                <MenuItem icon={<IoSettings size={25} />}>Settings</MenuItem>
-                <MenuDivider />
-                <MenuItem icon={<IoLogOutOutline size={25} />} color="red.500">
-                  Logout
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          </Flex>
+                Login
+              </Button>
+              <Button
+                bg="purple.600"
+                colorScheme="purple"
+                variant="solid"
+                as={RouterLink}
+                to="/register"
+              >
+                Register
+              </Button>
+            </HStack>
+          )}
         </Flex>
 
         {isOpen ? (

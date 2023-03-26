@@ -2,35 +2,30 @@ import { Box, Flex, Image, Link, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-const communities = [
+const Friends = [
   {
-    name: "React",
-    link: "/c/react",
+    name: "Bill Gates",
+    link: "/u/bill",
     image:
-      "https://i0.wp.com/www.primefaces.org/wp-content/uploads/2017/09/feature-react.png?ssl=1",
+      "https://www.pricepony.com.ph/blog/wp-content/uploads/2017/09/xVAFH9ZH.jpg",
   },
   {
-    name: "Javascript",
-    link: "c/javascript",
+    name: "Elon Musk",
+    link: "/u/elon",
     image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTab05l3ndGtZqyqxgTeOkmB7g2eDGyYrQp60gRu108tIEXOLQTl8tf9Jpx90UiNJEIv1Q&usqp=CAU",
+      "https://s3-us-west-1.amazonaws.com/upload.comparably.com/7640/companies/7640/people/ceo_1667591757618.jpg",
   },
   {
-    name: "Linux",
-    link: "/c/linux",
+    name: "Mark Zuckerberg",
+    link: "/u/mark",
     image:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/800px-Tux.svg.png",
+      "https://cdn.openart.ai/stable_diffusion/16a4bf65b4b4bde66fe83b8af44a0b03e7865a8a_2000x2000.webp",
   },
   {
-    name: "Pop!_OS",
-    link: "/c/pop_os",
-    image: "https://pop.system76.com/icon-512.png",
-  },
-  {
-    name: "Arch Linux",
-    link: "/c/arch",
+    name: "Jeff Bezos",
+    link: "/u/jeff",
     image:
-      "https://cdn0.iconfinder.com/data/icons/flat-round-system/512/archlinux-512.png",
+      "https://alumnimagazine.insead.edu/files/2017/07/512px-Jeff_Bezos_iconic_laugh_crop-pft85q.jpg",
   },
 ];
 
@@ -46,10 +41,10 @@ const RightbarContent = ({ ...rest }) => {
   return (
     <Box bg="white" w={60} h="auto" {...rest} pos="fixed">
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl">Communities</Text>
+        <Text fontSize="2xl">Friends</Text>
       </Flex>
-      <VStack spacing={4} py={8}>
-        {communities.map((link) => (
+      <VStack spacing={4}>
+        {Friends.map((link) => (
           <NavItem
             key={link.name}
             name={link.name}
@@ -85,7 +80,7 @@ const NavItem = ({ name, link, image }) => {
         }}
       >
         {image && (
-          <Image src={image} alt={name} rounded="full" w={8} h={8} mr="4" />
+          <Image src={image} alt={name} rounded="full" w={10} h={10} mr="4" />
         )}
         {name}
       </Flex>

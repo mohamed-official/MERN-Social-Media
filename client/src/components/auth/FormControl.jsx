@@ -1,10 +1,23 @@
-import { FormControl as ChakraFormControl, FormLabel, Input  } from "@chakra-ui/react";
+import {
+  FormControl as ChakraFormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 
-const FormControl = ({ type, label, placeholder = "" }) => {
+const FormControl = ({
+  type,
+  label,
+  placeholder = "",
+  error,
+  errorMsg,
+  ...rest
+}) => {
   return (
-    <ChakraFormControl>
+    <ChakraFormControl isInvalid={error}>
       <FormLabel>{label}</FormLabel>
-      <Input type={type} placeholder={placeholder} />
+      <Input type={type} placeholder={placeholder} {...rest} bg="white" />
+      {error && <FormErrorMessage>{errorMsg}</FormErrorMessage>}
     </ChakraFormControl>
   );
 };

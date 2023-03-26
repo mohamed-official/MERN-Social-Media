@@ -46,7 +46,7 @@ const Feed = () => {
       <NewPost />
       <VStack spacing={16} mt={16}>
         {Posts.map((post) => (
-          <Post post={post} />
+          <Post key={post.text} post={post} />
         ))}
       </VStack>
     </Box>
