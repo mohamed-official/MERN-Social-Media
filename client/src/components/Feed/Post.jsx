@@ -1,10 +1,58 @@
-import { Avatar, Box, HStack, Text, VStack } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  HStack,
+  IconButton,
+  Text,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
+import axios from "axios";
 import moment from "moment";
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { MdOutlineInsertComment } from "react-icons/md";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setPost } from "../../state";
 
 const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+  const userId = useSelector((state) => state.user.id);
+  const isLiked = Boolean(post.likes[userId]);
+  const likeCount = Object.keys(post.likes).length;
   const date = moment(post.createdAt).fromNow();
+  const toast = useToast();
+
+  const likePost = async () => {
+    await axios
+      .patch(
+        `http://localhost:7096/posts/${post._id}/like`,
+        { userId: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((res) => {
+        const updatedPost = res?.data;
+        dispatch(setPost({ post: updatedPost }));
+      })
+      .catch((error) => {
+        console.log(error);
+        toast({
+          title: "Error, try again later!",
+          status: "error",
+          isClosable: true,
+          duration: 3000,
+          position: "top",
+        });
+      });
+  };
 
   return (
     <Box
@@ -23,7 +71,6 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
         borderBottom="1px solid"
         borderColor="gray.200"
         pb={4}
-        mb={4}
       >
         <Avatar
           src={user.avatarPath}
@@ -41,10 +88,15 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
           </Text>
         </VStack>
       </HStack>
-      <Text fontSize="xl" color="gray.600" mb={2}>
-        {post.text}
+      <Text fontSize="xl" color="gray.600" my={6}>
+        {post.text.slice(0, 300)}{" "}
+        {post.text.length > 300 && (
+          <Text as={span} cursor="pointer" color="gray.400" display="inline">
+            show more...
+          </Text>
+        )}
       </Text>
-      <Box maxH="700px" overflow="hidden">
+      <Box maxH="700px" overflow="hidden" rounded="lg">
         <LazyLoadImage
           onClick={(e) => {
             setShowPreview(true);
@@ -56,12 +108,37 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
           style={{
             cursor: "pointer",
             objectFit: "cover",
-            borderRadius: "0.5rem",
           }}
           width="100%"
           height="24rem"
         />
       </Box>
+      <Flex justifyContent="space-between" mt={8}>
+        <IconButton
+          as={HStack}
+          gap={4}
+          onClick={likePost}
+          bg="transparent"
+          color="purple.600"
+          cursor="pointer"
+        >
+          {isLiked ? (
+            <>
+              <IoHeart size={30} />
+              <Text fontSize="xl">{likeCount}</Text>
+            </>
+          ) : (
+            <>
+              <IoHeartOutline size={30} />
+              <Text fontSize="xl">{likeCount}</Text>
+            </>
+          )}
+        </IconButton>
+        <IconButton bg="transparent" color="gray.500">
+          {/* <IoMessage size={30} /> */}
+          <MdOutlineInsertComment size={30} />
+        </IconButton>
+      </Flex>
     </Box>
   );
 };

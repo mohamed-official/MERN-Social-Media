@@ -23,7 +23,6 @@ export const addPost = async (req, res) => {
 export const getFeedPosts = async (req, res) => {
   try {
     let posts = await Post.find().sort({ createdAt: "desc" });
-    let users = [];
     for (let i = 0; i < posts.length; i++) {
       const user = await User.findById(posts[i].userId);
       posts[i] = { ...posts[i], user };
@@ -49,14 +48,21 @@ export const likePost = async (req, res) => {
     const { id } = req.params;
     const { userId } = req.body;
     const post = await Post.findById(id);
+    const user = await User.findById(post.userId);
     const isLiked = post.likes.get(userId);
 
-    isLikes ? post.likes.delete(userId) : post.likes.set(userId, true);
-    const updatedPost = await Post.findByIdAndUpdate(
+    if (isLiked) {
+      post.likes.delete(userId);
+    } else {
+      post.likes.set(userId, true);
+    }
+    let updatedPost = await Post.findByIdAndUpdate(
       id,
       { likes: post.likes },
       { new: true }
     );
+
+    updatedPost = { ...updatedPost, user };
 
     res.status(200).json(updatedPost);
   } catch (error) {
