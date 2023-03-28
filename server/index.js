@@ -69,7 +69,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(PORT, () =>
+    app.listen(PORT, async () =>
       console.log(chalk.green(`Server Running... \n Port: ${PORT}`))
     );
   })

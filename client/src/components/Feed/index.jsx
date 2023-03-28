@@ -1,52 +1,50 @@
 import { Box, VStack } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setPosts } from "../../state";
+import FullScreenImage from "../Images/FullScreen";
 import NewPost from "./NewPost";
 import Post from "./Post";
 
-const Posts = [
-  {
-    user: "Leo Messi",
-    image:
-      "https://wallpapers.com/images/hd/4k-football-lionel-messi-number-0baki34kd2suqmtn.jpg",
-    text: "Messiiiiii!!",
-  },
-  {
-    user: "mohamed",
-    image:
-      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b3355004-e447-43d4-8f97-7067752dfe3d/daratdr-82de8041-38b4-4791-9d40-c6d16afd0eae.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2IzMzU1MDA0LWU0NDctNDNkNC04Zjk3LTcwNjc3NTJkZmUzZFwvZGFyYXRkci04MmRlODA0MS0zOGI0LTQ3OTEtOWQ0MC1jNmQxNmFmZDBlYWUuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.DF9tmuc5O3JnYrH037Me6BN6_3_kQs5UPW1eMUT6W4g",
-    text: "I use arch btw",
-  },
-  {
-    user: "ahmed",
-    image: "https://blog.ippon.fr/content/images/2016/04/react-javascript.png",
-    text: "I Love React",
-  },
-  {
-    user: "angular",
-    image:
-      "https://cdn.searchenginejournal.com/wp-content/uploads/2019/04/the-seo-guide-to-angular.png",
-    text: "I Love Angular",
-  },
-  {
-    user: "Vue JS",
-    image:
-      "https://segwitz.com/wp-content/uploads/2021/06/vuejs-development-malaysia.jpeg",
-    text: "I Love VueJS",
-  },
-  {
-    user: "Svelte",
-    image:
-      "https://cdn.hashnode.com/res/hashnode/image/upload/v1619358925225/50e2XssdE.png",
-    text: "I Love Svelte",
-  },
-];
-
 const Feed = () => {
+  const [showPreview, setShowPreview] = useState(false);
+  const [previewSrc, setPreviewSrc] = useState("");
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.posts);
+  const token = useSelector((state) => state.token);
+
+  const getPosts = async () => {
+    await axios
+      .get("http://localhost:7096/posts", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        dispatch(setPosts({ posts: res?.data }));
+      });
+  };
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
   return (
-    <Box w="90%" mx="auto" mb={16} pl={{ base: "0px", lg: 24, xl: "0px" }}>
-      <NewPost />
-      <VStack spacing={16} mt={16}>
-        {Posts.map((post) => (
-          <Post key={post.text} post={post} />
+    <Box w="90%" mx="auto" mb={16} pl={{ base: "0px", lg: "40%", xl: "0px" }}>
+      {showPreview && (
+        <FullScreenImage src={previewSrc} setShowPreview={setShowPreview} />
+      )}
+      <VStack spacing={16}>
+        <NewPost />
+        {posts.map((post) => (
+          <Post
+            key={post._doc._id}
+            post={post._doc}
+            user={post.user}
+            setShowPreview={setShowPreview}
+            setPreviewSrc={setPreviewSrc}
+          />
         ))}
       </VStack>
     </Box>

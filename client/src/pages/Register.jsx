@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import RegisterImage from "../assets/Register.svg";
-import FormControl from "../components/auth/FormControl.jsx";
+import FormControl from "../components/Auth/FormControl.jsx";
 
 const passwordValidation = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[a-zA-Z]).{8,}$/;
 

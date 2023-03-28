@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import LoginImage from "../assets/Login.svg";
-import FormControl from "../components/auth/FormControl";
+import FormControl from "../components/Auth/FormControl";
 import { setLogin } from "../state";
 
 const loginSchema = yup.object().shape({

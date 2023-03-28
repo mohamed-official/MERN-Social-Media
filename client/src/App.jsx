@@ -13,6 +13,7 @@ import {
 } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import storage from "redux-persist/lib/storage";
+import FullScreenImage from "./components/Images/FullScreen";
 import { router } from "./routes";
 import authReducer from "./state";
 

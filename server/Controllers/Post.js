@@ -1,4 +1,5 @@
 import Post from "../Models/Post.js";
+import User from "../Models/User.js";
 
 export const addPost = async (req, res) => {
   try {
@@ -21,10 +22,15 @@ export const addPost = async (req, res) => {
 
 export const getFeedPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    let posts = await Post.find().sort({ createdAt: "desc" });
+    let users = [];
+    for (let i = 0; i < posts.length; i++) {
+      const user = await User.findById(posts[i].userId);
+      posts[i] = { ...posts[i], user };
+    }
     res.status(200).json(posts);
   } catch (error) {
-    res.status(404).json({ msg: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
