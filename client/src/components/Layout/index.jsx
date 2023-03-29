@@ -13,7 +13,10 @@ const Layout = () => {
         <Sidebar />
         <Rightbar />
         <Box mx={{ lg: 60 }} pt={24}>
-          <Outlet />
+          <Box w="90%" mx="auto" mb={16} pl={{ base: "0px", lg: "40%", xl: "0px" }}>
+
+            <Outlet />
+          </Box>
         </Box>
       </Container>
     </>

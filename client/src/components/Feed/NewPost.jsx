@@ -43,7 +43,7 @@ const NewPost = () => {
             name={`${user?.firstName} ${user?.lastName}`}
             size="md"
             as={Link}
-            to={`/u/${user?.username}`}
+            to={`/u/${user?.id}`}
           />
           <Input w="90%" placeholder="What're you thinking about?" />
         </HStack>

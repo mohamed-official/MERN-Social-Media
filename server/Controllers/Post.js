@@ -36,7 +36,11 @@ export const getFeedPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.params;
-    const posts = await Post.find({ userId });
+    let posts = await Post.find({ userId }).sort({ createdAt: "desc" });
+    for (let i = 0; i < posts.length; i++) {
+      const user = await User.findById(posts[i].userId);
+      posts[i] = { ...posts[i], user };
+    }
     res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({ msg: error.message });

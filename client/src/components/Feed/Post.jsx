@@ -43,7 +43,6 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
         dispatch(setPost({ post: updatedPost }));
       })
       .catch((error) => {
-        console.log(error);
         toast({
           title: "Error, try again later!",
           status: "error",
@@ -65,7 +64,7 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
     >
       <HStack
         as={Link}
-        to={`/u/${user.username}`}
+        to={`/u/${post.userId}`}
         spacing={8}
         alignItems="center"
         borderBottom="1px solid"
@@ -77,7 +76,7 @@ const Post = ({ post, user, setShowPreview, setPreviewSrc }) => {
           name={`${user.firstName} ${user.lastName}`}
           size="md"
           as={Link}
-          to={`/u/${user.username}`}
+          to={`/u/${post.userId}`}
         />
         <VStack alignItems="start">
           <Text fontSize="lg" color="gray.600">

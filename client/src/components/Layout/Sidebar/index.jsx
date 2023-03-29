@@ -10,7 +10,7 @@ import {
 import { Link as RouterLink } from "react-router-dom";
 
 const LinkItems = [
-  { name: "Home", link: "home", icon: FiHome },
+  { name: "Home", link: "/", icon: FiHome },
   { name: "Trending", link: "trending", icon: FiTrendingUp },
   { name: "Explore", link: "explore", icon: FiCompass },
   { name: "Favorites", link: "favorites", icon: FiStar },

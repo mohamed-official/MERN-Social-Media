@@ -125,7 +125,11 @@ const Navbar = () => {
                   </HStack>
                 </MenuButton>
                 <MenuList>
-                  <MenuItem icon={<IoPersonCircleOutline size={25} />}>
+                  <MenuItem
+                    as={RouterLink}
+                    to={`/u/${user?._id}`}
+                    icon={<IoPersonCircleOutline size={25} />}
+                  >
                     Profile
                   </MenuItem>
                   <MenuItem icon={<IoSettings size={25} />}>Settings</MenuItem>
